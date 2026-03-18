@@ -1,4 +1,4 @@
-import { Play, Volume2 } from "lucide-react";
+import { Play } from "lucide-react";
 import { useState } from "react";
 
 const videos = [
@@ -22,22 +22,23 @@ export default function VideoSection() {
   const [playing, setPlaying] = useState<number | null>(null);
 
   return (
-    <section className="px-4 py-6">
-      <div className="flex items-center justify-between mb-4">
+    <section className="py-6">
+      <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 gradient-teal rounded-full" />
           <h2 className="font-display text-2xl text-foreground tracking-wide">VÍDEOS</h2>
         </div>
-        <button className="text-xs text-primary font-semibold hover:underline">Ver todos</button>
+        <button className="text-xs text-primary font-semibold hover:underline">Ver todos →</button>
       </div>
 
-      <div className="space-y-4">
+      <div className="grid md:grid-cols-2 gap-4">
         {videos.map((video) => (
-          <div key={video.id} className="rounded-2xl overflow-hidden bg-giro-surface shadow-card">
-            <div className="relative aspect-video bg-background">
+          <div key={video.id} className="rounded-2xl overflow-hidden bg-giro-surface shadow-card group">
+            <div className="relative aspect-video bg-background overflow-hidden">
               <video
+                id={`vid-${video.id}`}
                 src={video.src}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 playsInline
                 controls={playing === video.id}
                 muted
@@ -52,9 +53,9 @@ export default function VideoSection() {
                     setPlaying(video.id);
                     el?.play();
                   }}
-                  className="absolute inset-0 flex items-center justify-center bg-background/40 group"
+                  className="absolute inset-0 flex items-center justify-center bg-background/40 group/play"
                 >
-                  <div className="w-14 h-14 rounded-full gradient-teal flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
+                  <div className="w-14 h-14 rounded-full gradient-teal flex items-center justify-center shadow-glow group-hover/play:scale-110 transition-transform">
                     <Play className="text-primary-foreground ml-1" size={22} fill="currentColor" />
                   </div>
                 </button>
